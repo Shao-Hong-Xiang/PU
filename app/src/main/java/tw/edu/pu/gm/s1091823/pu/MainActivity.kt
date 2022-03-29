@@ -16,13 +16,19 @@ GestureDetector.OnDoubleTapListener , View.OnTouchListener{
     var TotalPictures:Int = 4 //總共幾張圖片(假設僅顯示pu0-pu3)
 
     fun ShowPicture() {
+        /*
         when (PictureNo) {
             0 -> img.setImageResource(R.drawable.pu0)
             1 -> img.setImageResource(R.drawable.pu1)
             2 -> img.setImageResource(R.drawable.pu2)
             3 -> img.setImageResource(R.drawable.pu3)
         }
+        */
         txv.text = PictureNo.toString()
+        var res:Int = getResources().getIdentifier("pu" + PictureNo.toString(),
+            "drawable", getPackageName())
+        img.setImageResource(res)
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +36,15 @@ GestureDetector.OnDoubleTapListener , View.OnTouchListener{
         setContentView(R.layout.activity_main)
         gDetector = GestureDetector(this, this)
         img.setOnTouchListener(this)
+        var res:Int = -1
+        var countDrawables:Int = -1
+        while (res != 0) {
+            countDrawables++;
+            res = getResources().getIdentifier("pu" + countDrawables.toString(),
+                "drawable", getPackageName());
+        }
+        TotalPictures = countDrawables
+
 
     }
     /*
